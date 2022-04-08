@@ -27,6 +27,10 @@
     [self setupView];
 }
 
+- (void)dealloc {
+    NSLog(@"ViewController dealloc");
+}
+
 #pragma mark getter
 - (WKWebView *)webView {
     if (_webView == nil) {

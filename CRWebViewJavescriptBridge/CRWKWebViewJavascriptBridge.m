@@ -66,8 +66,6 @@
 }
 
 - (void)dealloc {
-    _base = nil;
-    _webView = nil;
     [self removeScriptMessageHandlers];
 }
 
@@ -81,9 +79,10 @@
 }
 
 - (void)addScriptMessageHandlers {
-    id<WKScriptMessageHandler> a = (id<WKScriptMessageHandler>)[[CRWKLeakAvoider alloc] initWithHandler:self];
-    [[_webView configuration].userContentController addScriptMessageHandler:a name:iOS_Native_InjectJavascript];
-    [[_webView configuration].userContentController addScriptMessageHandler:a name:iOS_Native_FlushMessageQueue];
+    id<WKScriptMessageHandler> _a = (id<WKScriptMessageHandler>)[[CRWKLeakAvoider alloc] initWithHandler:self];
+    
+    [[_webView configuration].userContentController addScriptMessageHandler:_a name:iOS_Native_InjectJavascript];
+    [[_webView configuration].userContentController addScriptMessageHandler:_a name:iOS_Native_FlushMessageQueue];
 }
 
 - (void)removeScriptMessageHandlers {
