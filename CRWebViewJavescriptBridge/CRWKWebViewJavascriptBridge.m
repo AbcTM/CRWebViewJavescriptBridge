@@ -109,12 +109,12 @@
 
 #pragma mark hander
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
-    NSLog(@"message.name:%@,messageBody:%@",message.name, message.body);
+    //NSLog(@"message.name:%@,messageBody:%@",message.name, message.body);
     
     ///
     if ([message.name isEqual: iOS_Native_InjectJavascript]) {
         if (self.webView.isLoading) {
-            NSLog(@"webView %@",self.webView.isLoading ? @"在加载中" : @"加载完成");
+            //NSLog(@"webView %@",self.webView.isLoading ? @"在加载中" : @"加载完成");
         }
         [_base injectJavascriptFile];
     }
