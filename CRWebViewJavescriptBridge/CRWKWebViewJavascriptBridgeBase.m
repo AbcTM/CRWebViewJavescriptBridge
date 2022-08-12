@@ -86,7 +86,7 @@ responseCallback:(CRWVJBResponseCallback _Nullable)responseCallback
 
 - (void)flushMessageString:(NSString *)messageString {
     if (messageString == nil || messageString.length == 0) {
-        NSLog(@"CRWebViewJavascriptBridge: WARNING: ObjC在从webview获取消息队列JSON时得到了nil。如果webview中当前不存在WebViewJavascriptBridge JS，例如webview刚刚加载了一个新页面，则可能会发生这种情况。");
+        //NSLog(@"CRWebViewJavascriptBridge: WARNING: ObjC在从webview获取消息队列JSON时得到了nil。如果webview中当前不存在WebViewJavascriptBridge JS，例如webview刚刚加载了一个新页面，则可能会发生这种情况。");
         return;
     }
     
@@ -102,7 +102,7 @@ responseCallback:(CRWVJBResponseCallback _Nullable)responseCallback
     __weak typeof(self) weakSelf = self;
     [self _evaluateJavascript:js completionHandler:^(id _Nullable obj, NSError * _Nullable err) {
         if (err) {
-            NSLog(@"injectJavascriptFile err:%@", err.localizedDescription);
+            //NSLog(@"injectJavascriptFile err:%@", err.localizedDescription);
             return;
         }
         // TODO:这里需要加载完自定义后回调派发的缓存消息
@@ -115,7 +115,7 @@ responseCallback:(CRWVJBResponseCallback _Nullable)responseCallback
 
 - (void)dispachCacheMessage {
     if (self.startupMessageQueue) {
-        NSLog(@"有缓存的消息需要发送");
+        //NSLog(@"有缓存的消息需要发送");
         NSArray *queue = self.startupMessageQueue;
         self.startupMessageQueue = nil;
         for (id queuedMessage in queue) {
@@ -150,7 +150,7 @@ responseCallback:(CRWVJBResponseCallback _Nullable)responseCallback
 /// 处理新收到的消息
 - (void)_revicedNewMessage:(CRWVJBMessage *)message {
     if (![message isKindOfClass:[CRWVJBMessage class]]) {
-        NSLog(@"WebViewJavascriptBridge: WARNING: Invalid %@ received: %@", [message class], message);
+        //NSLog(@"WebViewJavascriptBridge: WARNING: Invalid %@ received: %@", [message class], message);
         return;
     }
     [self _log:@"RCVD" json:message];
@@ -194,7 +194,7 @@ responseCallback:(CRWVJBResponseCallback _Nullable)responseCallback
         CRWVJBHandler handler = self.messageHandlers[message[@"handlerName"]];
         
         if (!handler) {
-            NSLog(@"WVJBNoHandlerException, No handler for message from JS: %@", message);
+            //NSLog(@"WVJBNoHandlerException, No handler for message from JS: %@", message);
             responseCallback(@{@"error":@"ObjcHandlerNotFound"});
             return;
         }
@@ -208,7 +208,7 @@ responseCallback:(CRWVJBResponseCallback _Nullable)responseCallback
 - (void)_queueMessage:(CRWVJBMessage *)message {
     /// 若不是消息队列不为nil，则将消息添加队列
     if (self.startupMessageQueue) {
-        NSLog(@"放入 startupMessageQueue");
+        //NSLog(@"放入 startupMessageQueue");
         [self.startupMessageQueue addObject:message];
     } else {
         /// 若已初始化，并派遣这个消息
@@ -251,16 +251,16 @@ responseCallback:(CRWVJBResponseCallback _Nullable)responseCallback
 
 /// log打印出来
 - (void)_log:(NSString *)action json:(id)json {
-    if (!logging) { return; }
-    if (![json isKindOfClass:[NSString class]]) {
-        json = [self _serializeMessage:json pretty:YES];
-    }
-    /// 日志打印的最大长度
-    if ([json length] > logMaxLength) {
-        NSLog(@"WVJB %@: %@ [...]", action, [json substringToIndex:logMaxLength]);
-    } else {
-        NSLog(@"WVJB %@: %@", action, json);
-    }
+//     if (!logging) { return; }
+//     if (![json isKindOfClass:[NSString class]]) {
+//         json = [self _serializeMessage:json pretty:YES];
+//     }
+//     /// 日志打印的最大长度
+//     if ([json length] > logMaxLength) {
+//         NSLog(@"WVJB %@: %@ [...]", action, [json substringToIndex:logMaxLength]);
+//     } else {
+//         NSLog(@"WVJB %@: %@", action, json);
+//     }
 }
 
 @end
